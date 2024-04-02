@@ -1,9 +1,9 @@
 .jumbotron{
-    background-image: url("AustralianFlagHeader.jpg");
+    
     #background-repeat: no-repeat; 
     background-size: cover;
     color: black;
-    text-align: right;
+    text-align: right
 }
 
 .table-headers{

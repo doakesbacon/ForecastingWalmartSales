@@ -15,43 +15,6 @@
       height: 400px;
     }
 
-    /* Style for video background */
-    #bg-video {
-      position: fixed;
-      top: 0;
-      left: 0;
-      min-width: 100%;
-      min-height: 100%;
-      z-index: -1;
-    }
-
-    .container {
-      position: relative;
-      z-index: 1; /* Ensure other content appears above the video */
-    }
-
-    /* Style the quiz popup */
-    .modal {
-      display: none; /* Hidden by default */
-      position: fixed; /* Stay in place */
-      z-index: 1; /* Sit on top */
-      left: 0;
-      top: 0;
-      width: 100%; /* Full width */
-      height: 100%; /* Full height */
-      overflow: auto; /* Enable scroll if needed */
-      background-color: rgba(0, 0, 0, 0.4); /* Black with opacity */
-    }
-
-    /* Style the quiz popup content */
-    .modal-content {
-      background-color: #fefefe;
-      margin: 15% auto; /* 15% from the top and centered */
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%; /* Could be more or less, depending on screen size */
-    }
-
     /* Style the close button */
     .close {
       color: #aaa;
@@ -70,11 +33,10 @@
 </head>
 
 <body>
-
   <!-- Video Background -->
   <video id="bg-video" autoplay muted loop>
     <source src="aussie.mp4" type="video/mp4">
-    Your browser does not support the video tag.
+  
   </video>
   <div class="container">
     <div class="row">
@@ -83,7 +45,7 @@
         <p>Insight into Walmart Sales</p>
       </div>
     </div>
-    <!-- Rain -->
+    <!-- Store ID Selection -->
     <div class="row">
       <div class="col-md-4">
         <div class="well">
@@ -93,8 +55,6 @@
       </div>
       
     </div>
-
-   
 
     <div class="row">
       <div class="col-md-6">
@@ -125,20 +85,18 @@
         </table>
       </div>
     </div>
-    <!-- Temp -->
-    
- 
 
     <!-- Wind -->
     <div class="row">
       <div class="col-md-6">
         <table id="locTableWind" class="table table-borderless table-striped table-earning">
-          <caption>TBD</caption>
+          <caption>Major Holidays Sales</caption>
           <thead>
             <tr class="table-headers">
-              <th>TBD</th>
-              <th>TBD</th>
-              <th>TBD</th>
+              <th>Super Bowl</th>
+              <th>Labor Day</th>
+              <th>Thanksgiving</th>
+              <th>Christmas</th>
             </tr>
           </thead>
           <tbody id="locTableBodyWind"></tbody>
@@ -146,12 +104,13 @@
       </div>
       <div class="col-md-6">
         <table id="stateTableWind" class="table table-borderless table-striped table-earning">
-          <caption>TBD</caption>
+          <caption>Future Holiday Sales</caption>
           <thead>
             <tr class="table-headers">
-              <th>TBD</th>
-              <th>TBD</th>
-              <th>TBD</th>
+              <th>Super Bowl</th>
+              <th>Labor Day</th>
+              <th>Thanksgiving</th>
+              <th>Christmas</th>
             </tr>
           </thead>
           <tbody id="stateTableBodyWind"></tbody>
@@ -179,114 +138,8 @@
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    
-   
   </script>
  
- 
-<script>
-  // Quiz questions and answers
-  var questions = [
-  {
-    question: "What is the capital of Australia?",
-    answers: ["Sydney", "Melbourne", "Canberra", "Perth"],
-    correctAnswer: "Canberra"
-  },
-  {
-    question: "Which animal is native to Australia?",
-    answers: ["Panda", "Kangaroo", "Penguin", "Elephant"],
-    correctAnswer: "Kangaroo"
-  },
-  {
-    question: "What is the largest city in Australia?",
-    answers: ["Sydney", "Melbourne", "Brisbane", "Perth"],
-    correctAnswer: "Sydney"
-  },
-  {
-    question: "What is the national flower of Australia?",
-    answers: ["Rose", "Lily", "Wattle", "Daisy"],
-    correctAnswer: "Wattle"
-  },
-  {
-    question: "Which Australian state is known as the 'Sunshine State'?",
-    answers: ["Queensland", "New South Wales", "Victoria", "Western Australia"],
-    correctAnswer: "Queensland"
-  },
-  {
-    question: "What is the famous natural landmark in the Northern Territory of Australia?",
-    answers: ["Great Barrier Reef", "Uluru", "Sydney Opera House", "Great Ocean Road"],
-    correctAnswer: "Uluru"
-  },
-  {
-    question: "Which Australian city hosted the 2000 Summer Olympics?",
-    answers: ["Sydney", "Melbourne", "Brisbane", "Perth"],
-    correctAnswer: "Sydney"
-  },
-  {
-    question: "What is the currency of Australia?",
-    answers: ["Dollar", "Peso", "Euro", "Yen"],
-    correctAnswer: "Dollar"
-  },
-  {
-    question: "Which Australian animal can lay eggs?",
-    answers: ["Koala", "Kangaroo", "Platypus", "Wombat"],
-    correctAnswer: "Platypus"
-  },
-  {
-    question: "Which Australian landmark is known for its opera performances?",
-    answers: ["Sydney Opera House", "Uluru", "Great Barrier Reef", "Great Ocean Road"],
-    correctAnswer: "Sydney Opera House"
-  }
-];
-
-  var currentQuestion = 0;
-  var score = 0;
-
-  // Function to display the current question
-  function displayQuestion() {
-    $("#question").text(questions[currentQuestion].question);
-    var answersHtml = "";
-    for (var i = 0; i < questions[currentQuestion].answers.length; i++) {
-      answersHtml += '<input type="radio" name="answer" value="' + questions[currentQuestion].answers[i] + '">' + questions[currentQuestion].answers[i] + '<br>';
-    }
-    $("#answers").html(answersHtml);
-  }
-
-  // Function to check the answer
-  function checkAnswer() {
-    var selectedAnswer = $("input[name='answer']:checked").val();
-    if (selectedAnswer === questions[currentQuestion].correctAnswer) {
-      score++;
-    }
-    currentQuestion++;
-    if (currentQuestion < questions.length) {
-      displayQuestion();
-    } else {
-      // Display the score without hiding the modal
-      $("#result").text("You scored " + score + " out of " + questions.length);
-      // Optionally, reset the quiz here if you want to allow retakes
-       currentQuestion = 0;
-       score = 0;
-    }
-  }
-
-  // Open the quiz popup
-  function openQuizPopup() {
-    $("#quiz").show();
-    displayQuestion();
-  }
-
-  // Close the quiz popup
-  function closeQuizPopup() {
-    $("#quiz").hide();
-  }
-
-  // Event handler for submit button
-  $(document).on("click", "#submit", function() {
-    checkAnswer();
-  });
-</script>
-
 </body>
 
 </html>
