@@ -12,7 +12,7 @@
 //    updateDropdown(); // Call the function after data is fetched
 //});
 
-console.log(data);
+console.log(holidaydata);
 
 // Create functions
 //function updateDropdown() {
