@@ -12,9 +12,19 @@
 //    updateDropdown(); // Call the function after data is fetched
 //});
 
-console.log(holidaydata);
+console.log(holiday_data);
 
-// Create functions
+holiday_data.forEach(store => {
+    const storeId = store.Store;
+    const storeType = store.Type;
+    const storeSize = store.Size;
+    const weeklySales = store.Weekly_Sales;
+    const storeHoliday = store.Holiday
+    console.log(storeId);
+    console.log(storeType);
+    console.log(storeSize);
+    console.log(weeklySales);
+});
 //function updateDropdown() {
 //    let dropdownMenu = d3.select("#selDataset");
 //    let dropdownWeatherType = d3.select("#selWeatherType");
