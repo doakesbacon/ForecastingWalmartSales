@@ -1,30 +1,61 @@
-// Get data paths
-//let location_summary = "./Data/location_summary.json";
-//let RainyDays = "./Data/rainydays.json";
-//let state_summary = "./Data/state_summary.json";
-//
-//let weatherType = "Rain"; // Initialize weatherType with "Rain"
-//
-//// Fetch the JSON data and console log it
-//d3.json(state_summary).then(function(result) {
-//    data = result;
-//    console.log(data);
+////Get data paths
+//let all_merge_2010 = "Resources/all_merge_2010.json";
+//let all_merge_2011 = "./Resources/all_merge_2011.json";
+//let all_merge_2012 = "./Resources/all_merge_2012.json";
+////
+////let weatherType = "Rain"; // Initialize weatherType with "Rain"
+////
+////// Fetch the JSON data and console log it
+//d3.json(all_merge_2010).then(function(result) {
+//    data_2010 = result;
+//    console.log(data_2010);
 //    updateDropdown(); // Call the function after data is fetched
 //});
+fetch('./Resources/all_merge.json')
+  .then(response => response.json())
+  .then(all_data => {
+    console.log(all_data); // This will log the JSON data from example.json
+  })
+  .catch(error => {
+    console.error('Error fetching JSON: ', error);
+  });
 
-console.log(holiday_data);
+  fetch('./Resources/holiday_data.json')
+  .then(response => response.json())
+  .then(holiday_data => {
+    console.log(holiday_data); // This will log the JSON data from example.json
+  })
+  .catch(error => {
+    console.error('Error fetching JSON: ', error);
+  });
 
-holiday_data.forEach(store => {
-    const storeId = store.Store;
-    const storeType = store.Type;
-    const storeSize = store.Size;
-    const weeklySales = store.Weekly_Sales;
-    const storeHoliday = store.Holiday
-    console.log(storeId);
-    console.log(storeType);
-    console.log(storeSize);
-    console.log(weeklySales);
-});
+
+// Data for the chart
+var trace = {
+    x: ['January', 'February', 'March', 'April', 'May'],
+    y: [100, 200, 300, 400, 500],
+    mode: 'lines',
+    type: 'scatter'
+};
+
+var data = [trace];
+
+// Layout configuration
+var layout = {
+    title: 'Sales Data',
+    xaxis: {
+        title: 'Month'
+    },
+    yaxis: {
+        title: 'Sales'
+    }
+};
+
+// Plot the chart
+Plotly.newPlot('chart', data, layout);
+
+
+
 //function updateDropdown() {
 //    let dropdownMenu = d3.select("#selDataset");
 //    let dropdownWeatherType = d3.select("#selWeatherType");

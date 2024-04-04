@@ -10,81 +10,22 @@
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
     />
     <link rel="stylesheet" href="style.css" />
-    <script src="holiday_data.js"></script>
-    <script src="2010_data.js"></script>
-    <script src="2011_data.js"></script>
-    <script src="2012_data.js"></script>
-    <script src="app.js"></script>
+    <div id="chart"></div>
+    
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <!-- Leaflet CSS -->
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     />
-    <style>
-      #map {
-        height: 400px;
-      }
 
-      /* Style for video background */
-      #bg-video {
-        position: fixed;
-        top: 0;
-        left: 0;
-        min-width: 100%;
-        min-height: 100%;
-        z-index: -1;
-      }
-
-      .container {
-        position: relative;
-        z-index: 1; /* Ensure other content appears above the video */
-      }
-
-      /* Style the quiz popup */
-      .modal {
-        display: none; /* Hidden by default */
-        position: fixed; /* Stay in place */
-        z-index: 1; /* Sit on top */
-        left: 0;
-        top: 0;
-        width: 100%; /* Full width */
-        height: 100%; /* Full height */
-        overflow: auto; /* Enable scroll if needed */
-        background-color: rgba(0, 0, 0, 0.4); /* Black with opacity */
-      }
-
-      /* Style the quiz popup content */
-      .modal-content {
-        background-color: #fefefe;
-        margin: 15% auto; /* 15% from the top and centered */
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%; /* Could be more or less, depending on screen size */
-      }
-
-      /* Style the close button */
-      .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-      }
-
-      .close:hover,
-      .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-      }
-    </style>
   </head>
 
   <body>
-    <!-- Video Background -->
-    <video id="bg-video" autoplay muted loop>
-      <source src="aussie.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
+    <div id="plot"></div>
+    <script src="app.js"></script>
+    
+    
     <div class="container">
       <div class="row">
         <div class="col-md-12 jumbotron text-center">
@@ -246,7 +187,6 @@
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
       <!-- Leaflet JavaScript -->
       <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-      <script src="data.js"></script>
     </div>
   </body>
 </html>
