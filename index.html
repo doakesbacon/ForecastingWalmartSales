@@ -11,21 +11,16 @@
     />
     <link rel="stylesheet" href="style.css" />
     <div id="chart"></div>
-    
+
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <!-- Leaflet CSS -->
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     />
-
   </head>
 
   <body>
-    <div id="plot"></div>
-    <script src="app.js"></script>
-    
-    
     <div class="container">
       <div class="row">
         <div class="col-md-12 jumbotron text-center">
@@ -35,13 +30,9 @@
       </div>
       <!-- Rain -->
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-2">
           <div class="well">
-            <h5>Select Store:</h5>
-            <select
-              id="selDataset"
-              onchange="optionChanged(this.value, document.getElementById('selWeatherType').value)"
-              <option value="all">all</option>
+            <select id="selDataset" onchange="updatePlot(this.value)">
               <option value="Select Store">Select Store</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -88,7 +79,8 @@
               <option value="43">43</option>
               <option value="44">44</option>
               <option value="45">45</option>
-            ></select>
+              >
+            </select>
           </div>
         </div>
       </div>
@@ -179,6 +171,7 @@
           </div>
         </div>
       </div>
+      <div id="plot"></div>
 
       <!-- Include JavaScript libraries -->
       <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -186,6 +179,7 @@
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
       <!-- Leaflet JavaScript -->
       <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+      <script src="app.js"></script>
     </div>
   </body>
 </html>

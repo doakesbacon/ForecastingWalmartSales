@@ -5,84 +5,186 @@
 ////
 ////let weatherType = "Rain"; // Initialize weatherType with "Rain"
 ////
+
+let all_merge;
 ////// Fetch the JSON data and console log it
-//d3.json(all_merge_2010).then(function(result) {
-//    data_2010 = result;
-//    console.log(data_2010);
-//    updateDropdown(); // Call the function after data is fetched
-//});
-fetch('./Resources/all_merge.json')
-  .then(response => response.json())
-  .then(all_data => {
-    console.log(all_data); 
-  })
-  .catch(error => {
-    console.error('Error fetching JSON: ', error);
-  });
+d3.json("./Resources/all_merge.json").then(function (result) {
+  all_merge = result;
+  console.log(all_merge);
+  //updateDropdown(); // Call the function after data is fetched
+});
 
-  fetch('./Resources/holiday_data.json')
-    .then(response => response.json())
-    .then(data => {
-      holiday_data = data;
-      console.log(holiday_data); 
+let holiday_data;
+let holiday_name;
+let outputArray;
+let store_name;
+let outputArray2;
+////// Fetch the JSON data and console log it
+d3.json("./Resources/holiday_data.json").then(function (result) {
+  holiday_data = result;
+  console.log(holiday_data);
+  //updateDropdown(); // Call the function after data is fetched
+  holiday_name = holiday_data.map((holidays) => holidays.Holiday);
+  console.log(holiday_name);
+  outputArray = Array.from(new Set(holiday_name));
+  console.log(outputArray);
+  store_name = holiday_data.map((stores) => stores.Store);
+  outputArray2 = Array.from(new Set(store_name));
+  console.log(outputArray2);
+});
 
-      //Gets all the holiday names
-      let holiday_name = holiday_data.map(holidays => holidays.Holiday)
-      console.log(holiday_name)
-      //Gets only the unique holiday names
-      function uniqueHoliday(holiday_name) {
-        let outputArray = Array.from(new Set(holiday_name))
-        return outputArray
-    }
-      //Gets all the store names
-      let store_name = holiday_data.map(stores => stores.Store)
-      console.log(store_name)
-      //Gets all the store names
-      function uniqueName(name) {
-        let outputArray2 = Array.from(new Set(name))
-        return outputArray2
-    }
-    console.log(uniqueHoliday(holiday_name));
-    })
+function updatePlot(selectedStore) {
+  console.log(selectedStore);
+  console.log(holiday_data);
+  const storeInfo = holiday_data.filter(
+    (stores) => stores.Store == selectedStore
+  );
+  console.log(storeInfo);
 
-  //let holiday_data = fetch('./Resources/holiday_data.json')
-  //.then(response => response.json())
-  //.then(holiday_data => {
-  //  console.log(holiday_data); 
-  //})
-  //.catch(error => {
-  //  console.error('Error fetching JSON: ', error);
-  //});
-
-  
-  //let holiday = holiday_data.map(holidays => holidays.Holiday)
-  //console.log(holiday)
-
-// Data for the chart
-var trace = {
-    x: ['January', 'February', 'March', 'April', 'May'],
-    y: [100, 200, 300, 400, 500],
-    mode: 'lines',
-    type: 'scatter'
-};
-
-var data = [trace];
-
-// Layout configuration
-var layout = {
-    title: 'Sales Data',
+  let layout = {
+    title: "Store Revenue by Holiday",
+    width: 1000,
+    height: 500,
+    margin: {
+      l: 200,
+      r: 80,
+      b: 80,
+      t: 80,
+    },
     xaxis: {
-        title: 'Month'
+      title: "Holidays",
     },
     yaxis: {
-        title: 'Sales'
-    }
-};
+      title: "Total Sales",
+    },
+  };
+  let traces = [];
 
-// Plot the chart
-Plotly.newPlot('chart', data, layout);
+  traces.push({
+    x: storeInfo.map((holidays) => holidays.Holiday),
+    y: storeInfo.map((sales) => sales.Weekly_Sales),
+    name: "holiday",
+    type: "bar",
+  });
+  Plotly.newPlot("plot", traces, layout);
 
+  const allStoreInfo = all_merge.filter(
+    (stores) => stores.Store == selectedStore
+  );
+  console.log(allStoreInfo);
 
+  const yearStoreInfo = allStoreInfo.filter((years) => years.Year == 2010);
+  console.log(yearStoreInfo);
+
+  let weekly_sale = yearStoreInfo.map(
+    (weekly_sales) => weekly_sales.Weekly_Sales
+  );
+  console.log(weekly_sale);
+  const sum = weekly_sale.reduce((partialSum, a) => partialSum + a, 0);
+  console.log(sum); // 6
+}
+
+//fetch('./Resources/all_merge.json')
+//  .then(response => response.json())
+//  .then(all_data => {
+//    console.log(all_data);
+//  })
+//  .catch(error => {
+//    console.error('Error fetching JSON: ', error);
+//  });
+
+//  fetch('./Resources/holiday_data.json')
+//    .then(response => response.json())
+//    .then(data => {
+//      holiday_data = data;
+//      console.log(holiday_data);
+//
+//      //Gets all the holiday names
+//      let holiday_name = holiday_data.map(holidays => holidays.Holiday)
+//      //console.log(holiday_name)
+//      //Gets only the unique holiday names
+//      function uniqueHoliday(holiday_name) {
+//        let outputArray = Array.from(new Set(holiday_name))
+//        return outputArray
+//    }
+//      //Gets all the store names
+//      let store_name = holiday_data.map(stores => stores.Store)
+//      //console.log(store_name)
+//      //Gets all the store names
+//      function uniqueStore(name) {
+//        let outputArray2 = Array.from(new Set(name))
+//        return outputArray2
+//    }
+//    console.log(uniqueHoliday(holiday_name));
+//    console.log(uniqueStore(store_name));
+//
+//  })
+
+//fetch('./Resources/holiday_data.json')
+//  .then(response => response.json())
+//  .then(data => {
+//    holiday_data = data;
+//    //console.log(holiday_data); // Access data here
+//    // You can also call a function here passing the data
+//    myFunction(holiday_data);
+//  })
+//
+//function myFunction(holiday_data) {
+//  // Do something with the fetched data
+//  console.log(holiday_data);
+//}
+
+//    let layout = {
+//      title: "Store Revenue by Holiday",
+//      width: 250,
+//      height: 200,
+//      margin: {
+//          l: 5,
+//          r: 5,
+//          b: 5,
+//          t: 5
+//      },
+//      xaxis: {
+//          title: 'Holidays',
+//          },
+//      yaxis: {
+//          title: 'Total Sales',
+//          }
+//  }
+//
+//function updatePlot(selectedStore) {
+//
+//  const storeInfo = data.filter(stores => stores.Store === selectedStore);
+//
+//  let holidayNames = uniqueHoliday(storeInfo.map(holidays => holidays.Holiday));
+//  let traces = [];
+//
+//  holidayNames.slice(0, 10).forEach(holiday => {
+//    let stock = storeInfo.filter(stores => stores.Store === holiday);
+//    traces.push({
+//      x: stock.map(holidays => holidays.holiday),
+//      y: stock.map(sales => sales.weekly_sales),
+//      name: holiday,
+//      type: 'scatter'
+//    });
+//  });
+//
+//  Plotly.newPlot("plot", traces, layout);
+//  }
+
+//let holiday_data = fetch('./Resources/holiday_data.json')
+//.then(response => response.json())
+//.then(holiday_data => {
+//  console.log(holiday_data);
+//})
+//.catch(error => {
+//  console.error('Error fetching JSON: ', error);
+//});
+
+//let holiday = holiday_data.map(holidays => holidays.Holiday)
+//console.log(holiday)
+
+// Data for the chart
 
 //var holidays = [];
 //
@@ -172,7 +274,7 @@ Plotly.newPlot('chart', data, layout);
 //        d3.json(state_summary).then((data) => {
 //            let months = data.filter(state => state.Month === selectedMonth);
 //
-//             
+//
 //
 //
 //            let body = d3.select("#stateTableBodyRain");
@@ -193,7 +295,7 @@ Plotly.newPlot('chart', data, layout);
 //        d3.select("#stateTableWind").style("display", "none");
 //        d3.select("#locTableHum").style("display", "none");
 //        d3.select("#stateTableHum").style("display", "none");
-//        
+//
 //        d3.select("#windplot").style("display", "none");
 //        d3.select("#humidityplot").style("display", "none");
 //        d3.select("#tempplot").style("display", "none");
@@ -224,7 +326,7 @@ Plotly.newPlot('chart', data, layout);
 //        });
 //        d3.json(state_summary).then((data) => {
 //            let months = data.filter(state => state.Month === selectedMonth);
-//           
+//
 //            let body = d3.select("#stateTableBodyTemp");
 //            body.html("");
 //            months.forEach(month => {
@@ -260,7 +362,7 @@ Plotly.newPlot('chart', data, layout);
 //        d3.json(location_summary).then((data) => {
 //            let months = data.filter(process => process.Month === selectedMonth);
 //            months.sort((a, b) => a.Location.localeCompare(b.Location));
-//            let body = d3.select("#locTableBodyWind");  
+//            let body = d3.select("#locTableBodyWind");
 //            body.html("");
 //            months.forEach(month => {
 //                let row = body.append('tr');
@@ -276,7 +378,7 @@ Plotly.newPlot('chart', data, layout);
 //        });
 //        d3.json(state_summary).then((data) => {
 //            let months = data.filter(state => state.Month === selectedMonth);
-//            
+//
 //            let body = d3.select("#stateTableBodyWind");
 //            body.html("");
 //            months.forEach(month => {
@@ -295,7 +397,7 @@ Plotly.newPlot('chart', data, layout);
 //        d3.select("#stateTableTemp").style("display", "none");
 //        d3.select("#locTableHum").style("display", "none");
 //        d3.select("#stateTableHum").style("display", "none");
-//        
+//
 //        d3.select("#tempplot").style("display", "none");
 //        d3.select("#humidityplot").style("display", "none");
 //
@@ -321,7 +423,7 @@ Plotly.newPlot('chart', data, layout);
 //        });
 //        d3.json(state_summary).then((data) => {
 //            let months = data.filter(state => state.Month === selectedMonth);
-//             
+//
 //            let body = d3.select("#stateTableBodyHum");
 //            body.html("");
 //            months.forEach(month => {
@@ -347,7 +449,7 @@ Plotly.newPlot('chart', data, layout);
 //        d3.select("#stateTableHum").style("display", "block");
 //
 //        d3.select("#humidityplot").style("display", "block");
-//       
+//
 //
 //    }
 //};
@@ -402,7 +504,7 @@ Plotly.newPlot('chart', data, layout);
 //                        color: '#00040a',
 //                        width: 1
 //                    }
-//                }    
+//                }
 //            };
 //
 //            // Apply a title to the layout
@@ -487,7 +589,7 @@ Plotly.newPlot('chart', data, layout);
 //                        color: '#00040a',
 //                        width: 1
 //                    }
-//                } 
+//                }
 //            };
 //
 //            // Apply a title to the layout
@@ -570,7 +672,7 @@ Plotly.newPlot('chart', data, layout);
 //                        color: '#00040a',
 //                        width: 1
 //                    }
-//                } 
+//                }
 //            };
 //
 //            // Apply a title to the layout
