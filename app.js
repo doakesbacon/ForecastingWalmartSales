@@ -68,20 +68,61 @@ function updatePlot(selectedStore) {
   });
   Plotly.newPlot("plot", traces, layout);
 
+  //Gets all the info based on the selected store
   const allStoreInfo = all_merge.filter(
     (stores) => stores.Store == selectedStore
   );
   console.log(allStoreInfo);
-
-  const yearStoreInfo = allStoreInfo.filter((years) => years.Year == 2010);
-  console.log(yearStoreInfo);
-
-  let weekly_sale = yearStoreInfo.map(
-    (weekly_sales) => weekly_sales.Weekly_Sales
+  //Gets all the info of the selected store and the year 2010
+  const storeInfo2010 = allStoreInfo.filter((years) => years.Year == 2010);
+  console.log(storeInfo2010);
+  //Gets only the weekly sales for the selected store and year 2010
+  let weeklySale2010 = storeInfo2010.map(
+    (weeklySale2010) => weeklySale2010.Weekly_Sales
   );
-  console.log(weekly_sale);
-  const sum = weekly_sale.reduce((partialSum, a) => partialSum + a, 0);
-  console.log(sum); // 6
+  console.log(weeklySale2010);
+  //Gets the sum of all the weekly sales
+  const sum2010 = weeklySale2010.reduce((partialSum, a) => partialSum + a, 0);
+  console.log(Math.round(sum2010)); // 6
+
+  //Gets all the info of the selected store and the year 2011
+  const storeInfo2011 = allStoreInfo.filter((years) => years.Year == 2011);
+  console.log(storeInfo2011);
+  //Gets only the weekly sales for the selected store and year 2011
+  let weeklySale2011 = storeInfo2011.map(
+    (weeklySale2011) => weeklySale2011.Weekly_Sales
+  );
+  console.log(weeklySale2011);
+  //Gets the sum of all the weekly sales
+  const sum2011 = weeklySale2011.reduce((partialSum, a) => partialSum + a, 0);
+  console.log(Math.round(sum2011)); // 6
+
+  //Gets all the info of the selected store and the year 2012
+  const storeInfo2012 = allStoreInfo.filter((years) => years.Year == 2012);
+  console.log(storeInfo2012);
+  //Gets only the weekly sales for the selected store and year 2012
+  let weeklySale2012 = storeInfo2012.map(
+    (weeklySale2012) => weeklySale2012.Weekly_Sales
+  );
+  console.log(weeklySale2012);
+  //Gets the sum of all the weekly sales
+  const sum2012 = weeklySale2012.reduce((partialSum, a) => partialSum + a, 0);
+  console.log(Math.round(sum2012)); // 6
+
+  const sums = {
+    2010: weeklySale2010.reduce((partialSum, a) => partialSum + a, 0),
+    2011: weeklySale2011.reduce((partialSum, a) => partialSum + a, 0),
+    2012: weeklySale2012.reduce((partialSum, a) => partialSum + a, 0),
+  };
+
+  let tableBody = d3.select("#sample-metadata");
+  tableBody.html("");
+
+  Object.entries(sums).forEach(([year, sum]) => {
+    let row = tableBody.append("tr");
+    row.append("td").text(year + ": $");
+    row.append("td").text(Math.round(sum).toLocaleString());
+  });
 }
 
 //fetch('./Resources/all_merge.json')

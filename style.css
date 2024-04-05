@@ -16,3 +16,18 @@
   .table td, .table th {
     padding: 10px; /* Add padding to table cells */
   }
+  .panel-title {
+    background-color: rgb(56, 97, 185);
+  }
+  .panel-heading{
+    color: brown;
+  }
+  .panel-primary {
+    background-color: royalblue;
+    color: white;
+    padding: 10px;
+    max-width: 300px;
+    margin-left: 150px;
+  }
+
+  
