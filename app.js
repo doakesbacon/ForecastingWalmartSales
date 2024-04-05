@@ -14,21 +14,49 @@
 fetch('./Resources/all_merge.json')
   .then(response => response.json())
   .then(all_data => {
-    console.log(all_data); // This will log the JSON data from example.json
+    console.log(all_data); 
   })
   .catch(error => {
     console.error('Error fetching JSON: ', error);
   });
 
   fetch('./Resources/holiday_data.json')
-  .then(response => response.json())
-  .then(holiday_data => {
-    console.log(holiday_data); // This will log the JSON data from example.json
-  })
-  .catch(error => {
-    console.error('Error fetching JSON: ', error);
-  });
+    .then(response => response.json())
+    .then(data => {
+      holiday_data = data;
+      console.log(holiday_data); 
 
+      //Gets all the holiday names
+      let holiday_name = holiday_data.map(holidays => holidays.Holiday)
+      console.log(holiday_name)
+      //Gets only the unique holiday names
+      function uniqueHoliday(holiday_name) {
+        let outputArray = Array.from(new Set(holiday_name))
+        return outputArray
+    }
+      //Gets all the store names
+      let store_name = holiday_data.map(stores => stores.Store)
+      console.log(store_name)
+      //Gets all the store names
+      function uniqueName(name) {
+        let outputArray2 = Array.from(new Set(name))
+        return outputArray2
+    }
+    console.log(uniqueHoliday(holiday_name));
+    })
+
+  //let holiday_data = fetch('./Resources/holiday_data.json')
+  //.then(response => response.json())
+  //.then(holiday_data => {
+  //  console.log(holiday_data); 
+  //})
+  //.catch(error => {
+  //  console.error('Error fetching JSON: ', error);
+  //});
+
+  
+  //let holiday = holiday_data.map(holidays => holidays.Holiday)
+  //console.log(holiday)
 
 // Data for the chart
 var trace = {
@@ -55,6 +83,42 @@ var layout = {
 Plotly.newPlot('chart', data, layout);
 
 
+
+//var holidays = [];
+//
+//holiday_data.forEach(function(item){
+//  holidays.push(item.Holiday);
+//});
+//console.log(holidays)
+//
+//let holiday_name = holiday_data.map(holiday_names => holiday_names.Holiday)
+//console.log(holiday_name)
+
+//function populateBarChart(id) {
+//  // Create a horizontal bar chart with a dropdown menu to display the top 10 OTUs found in that //individual
+//  d3.json(all_merge).then((data) => {
+//    let selecteddata = data.all_merge;
+//    let value = selecteddata.find(results => results.Store === Store);
+//    let valuedata = value;
+//    let otuLabels = valuedata.otu_labels;
+//    let otuIDs = valuedata.otu_ids;
+//    let sampleValues = valuedata.sample_values;
+//    let yticks = otuIDs.slice(0, 10).map(id => `OTU ${id}`).reverse();
+//    let xticks = sampleValues.slice(0, 10).reverse();
+//    let labels = otuLabels.slice(0, 10).reverse();
+//    // Trace for the microbial Data
+//    let trace1 = {
+//      x: xticks,
+//      y: yticks,
+//      type: "bar",
+//      text: labels,
+//      orientation: "v"
+//    };
+//    let layout = {
+//      title: `Top 10 OTUs for Individual ${id}`,
+//      xaxis: { title: 'Sample Values' },
+//      yaxis: { title: 'OTU ID' }
+//    };
 
 //function updateDropdown() {
 //    let dropdownMenu = d3.select("#selDataset");
