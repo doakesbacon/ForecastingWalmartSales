@@ -1,145 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Walmart Analysis</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <div id="chart"></div>
+    
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- Leaflet CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    />
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Walmart Analysis</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="style.css">
-  <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-  <style>
-    #map {
-      height: 400px;
-    }
+  </head>
 
-    /* Style the close button */
-    .close {
-      color: #aaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-    }
-
-    .close:hover,
-    .close:focus {
-      color: black;
-      text-decoration: none;
-      cursor: pointer;
-    }
-  </style>
-</head>
-
-<body>
-  <!-- Video Background -->
-  <video id="bg-video" autoplay muted loop>
-    <source src="aussie.mp4" type="video/mp4">
-  
-  </video>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12 jumbotron text-center">
-        <h1>Walmart Analysis</h1>
-        <p>Insight into Walmart Sales</p>
-      </div>
-    </div>
-    <!-- Store ID Selection -->
-    <div class="row">
-      <div class="col-md-4">
-        <div class="well">
-          <h5>Select Store:</h5>
-          <select id="selDataset" onchange="optionChanged(this.value, document.getElementById('selWeatherType').value)"></select>
+  <body>
+    <div id="plot"></div>
+    <script src="app.js"></script>
+    
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 jumbotron text-center">
+          <h1>Walmart Analysis</h1>
+          <p>Insight into Walmart Sales</p>
         </div>
       </div>
-      
-    </div>
-
-    <div class="row">
-      <div class="col-md-6">
-        <table id="locTableRain" class="table table-borderless table-striped table-earning">
-          <caption>Past Sales</caption>
-          <thead>
-            <tr class="table-headers">
-              <th>TBD</th>
-              <th>TBD</th>
-              <th>TBD</th>
-              <th>TBD</th>
-            </tr>
-          </thead>
-          <tbody id="locTableBodyRain"></tbody>
-        </table>
-      </div>
-      <div class="col-md-6">
-        <table id="stateTableRain" class="table table-borderless table-striped table-earning">
-          <caption>Future Projected Sales</caption>
-          <thead>
-            <tr class="table-headers">
-              <th>TBD</th>
-              <th>TBD</th>
-              <th>TBD</th>
-            </tr>
-          </thead>
-          <tbody id="stateTableBodyRain"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- Wind -->
-    <div class="row">
-      <div class="col-md-6">
-        <table id="locTableWind" class="table table-borderless table-striped table-earning">
-          <caption>Major Holidays Sales</caption>
-          <thead>
-            <tr class="table-headers">
-              <th>Super Bowl</th>
-              <th>Labor Day</th>
-              <th>Thanksgiving</th>
-              <th>Christmas</th>
-            </tr>
-          </thead>
-          <tbody id="locTableBodyWind"></tbody>
-        </table>
-      </div>
-      <div class="col-md-6">
-        <table id="stateTableWind" class="table table-borderless table-striped table-earning">
-          <caption>Future Holiday Sales</caption>
-          <thead>
-            <tr class="table-headers">
-              <th>Super Bowl</th>
-              <th>Labor Day</th>
-              <th>Thanksgiving</th>
-              <th>Christmas</th>
-            </tr>
-          </thead>
-          <tbody id="stateTableBodyWind"></tbody>
-        </table>
-      </div>
-
-      <div class="col-md-6">
-        <div class="col-md-12">
-          <div id="windplot"></div>
+      <!-- Rain -->
+      <div class="row">
+        <div class="col-md-4">
+          <div class="well">
+            <h5>Select Store:</h5>
+            <select
+              id="selDataset"
+              onchange="optionChanged(this.value, document.getElementById('selWeatherType').value)"
+              <option value="all">all</option>
+              <option value="Select Store">Select Store</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+              <option value="13">13</option>
+              <option value="14">14</option>
+              <option value="15">15</option>
+              <option value="16">16</option>
+              <option value="17">17</option>
+              <option value="18">18</option>
+              <option value="19">19</option>
+              <option value="20">20</option>
+              <option value="21">21</option>
+              <option value="22">22</option>
+              <option value="23">23</option>
+              <option value="24">24</option>
+              <option value="25">25</option>
+              <option value="26">26</option>
+              <option value="27">27</option>
+              <option value="28">28</option>
+              <option value="29">29</option>
+              <option value="30">30</option>
+              <option value="31">31</option>
+              <option value="32">32</option>
+              <option value="33">33</option>
+              <option value="34">34</option>
+              <option value="35">35</option>
+              <option value="36">36</option>
+              <option value="37">37</option>
+              <option value="38">38</option>
+              <option value="39">39</option>
+              <option value="40">40</option>
+              <option value="41">41</option>
+              <option value="42">42</option>
+              <option value="43">43</option>
+              <option value="44">44</option>
+              <option value="45">45</option>
+            ></select>
+          </div>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <table
+            id="locTableRain"
+            class="table table-borderless table-striped table-earning"
+          >
+            <caption>
+              Past Sales
+            </caption>
+            <thead>
+              <tr class="table-headers">
+                <th>TBD</th>
+                <th>TBD</th>
+                <th>TBD</th>
+                <th>TBD</th>
+              </tr>
+            </thead>
+            <tbody id="locTableBodyRain"></tbody>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <table
+            id="stateTableRain"
+            class="table table-borderless table-striped table-earning"
+          >
+            <caption>
+              Future Projected Sales
+            </caption>
+            <thead>
+              <tr class="table-headers">
+                <th>TBD</th>
+                <th>TBD</th>
+                <th>TBD</th>
+              </tr>
+            </thead>
+            <tbody id="stateTableBodyRain"></tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Temp -->
+
+      <!-- Wind -->
+      <div class="row">
+        <div class="col-md-6">
+          <table
+            id="locTableWind"
+            class="table table-borderless table-striped table-earning"
+          >
+            <caption>
+              TBD
+            </caption>
+            <thead>
+              <tr class="table-headers">
+                <th>TBD</th>
+                <th>TBD</th>
+                <th>TBD</th>
+              </tr>
+            </thead>
+            <tbody id="locTableBodyWind"></tbody>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <table
+            id="stateTableWind"
+            class="table table-borderless table-striped table-earning"
+          >
+            <caption>
+              TBD
+            </caption>
+            <thead>
+              <tr class="table-headers">
+                <th>TBD</th>
+                <th>TBD</th>
+                <th>TBD</th>
+              </tr>
+            </thead>
+            <tbody id="stateTableBodyWind"></tbody>
+          </table>
+        </div>
+
+        <div class="col-md-6">
+          <div class="col-md-12">
+            <div id="windplot"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Include JavaScript libraries -->
+      <script src="https://d3js.org/d3.v7.min.js"></script>
+      <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <!-- Leaflet JavaScript -->
+      <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     </div>
-
-  <!-- Include JavaScript libraries -->
-  <script src="https://d3js.org/d3.v7.min.js"></script>
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  <script src="./static/js/app.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <!-- Leaflet JavaScript -->
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-  <script>
-    // Initialize the Leaflet map
-    var map = L.map('map').setView([-27, 133], 4);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-
-  </script>
- 
-</body>
-
+  </body>
 </html>
