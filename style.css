@@ -2,6 +2,10 @@
     background-color: royalblue;
     color: white;
 }
+.table-headers-prediction{
+  background-color: royalblue;
+  color: white;
+}
 .table {
     background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white background */
     border-radius: 10px; /* Rounded corners */
@@ -19,18 +23,38 @@
   .panel-title {
     background-color: rgb(56, 97, 185);
   }
+  .panel-title-prediction {
+    background-color: rgb(0, 0, 0);
+  }
   .panel-heading{
-    color: brown;
+    color: rgb(0, 0, 0);
+  }
+  .panel-heading-predication{
+    color: rgb(0, 0, 0);
   }
   .panel-primary {
     background-color: royalblue;
     color: white;
-    padding: 10px;
-    max-width: 300px;
-    margin-left: 150px;
+    margin: 10%;
   }
-  .user-select-none{
+  .panel-title-prediction {
+    background-color: rgb(167, 37, 37);
+  }
+  .panel-primary-prediction {
+    background-color: rgb(185, 46, 46);
+    color: white;
+    margin: 10%;
+  }
+  /* .user-select-none{
     margin-left: 250px;
+  } */
+  .well{
+    margin: auto;
+    width: 50%;
+  }
+  select{
+    margin: auto;
+    display: block;
   }
 
   
