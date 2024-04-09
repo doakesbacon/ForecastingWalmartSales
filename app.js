@@ -1,11 +1,3 @@
-////Get data paths
-//let all_merge_2010 = "Resources/all_merge_2010.json";
-//let all_merge_2011 = "./Resources/all_merge_2011.json";
-//let all_merge_2012 = "./Resources/all_merge_2012.json";
-////
-////let weatherType = "Rain"; // Initialize weatherType with "Rain"
-////
-
 let all_merge;
 ////// Fetch the JSON data and console log it
 d3.json("./Resources/all_merge.json").then(function (result) {
@@ -37,13 +29,20 @@ let predictions;
 ////// Fetch the JSON data and console log it
 d3.json("./Resources/predictions.json").then(function (result) {
   predictions = result;
-  console.log(predictions);
+  //console.log(predictions);
+  //updateDropdown(); // Call the function after data is fetched
+});
+let holidayPredictions;
+////// Fetch the JSON data and console log it
+d3.json("./Resources/holiday_predictions.json").then(function (result) {
+  holidayPredictions = result;
+  console.log(holidayPredictions);
   //updateDropdown(); // Call the function after data is fetched
 });
 
 function updatePlot(selectedStore) {
-  console.log(selectedStore);
-  console.log(holiday_data);
+  //console.log(selectedStore);
+  //console.log(holiday_data);
   const storeInfo = holiday_data.filter(
     (stores) => stores.Store == selectedStore
   );
@@ -51,6 +50,9 @@ function updatePlot(selectedStore) {
     (stores) => stores.Store == selectedStore
   );
   const allStoreInfo = all_merge.filter(
+    (stores) => stores.Store == selectedStore
+  );
+  const holidayPredictionInfo = holidayPredictions.filter(
     (stores) => stores.Store == selectedStore
   );
 
@@ -181,8 +183,8 @@ function updatePlot(selectedStore) {
   let traces4 = [];
 
   traces4.push({
-    x: predictionInfo.map((holidays) => holidays.Holiday),
-    y: predictionInfo.map((sales) => sales.Weekly_Sales),
+    x: holidayPredictionInfo.map((holidays) => holidays.Holiday),
+    y: holidayPredictionInfo.map((sales) => sales.Weekly_Sales),
     name: "holiday",
     type: "bar",
     marker: {
@@ -327,49 +329,23 @@ function updatePlot(selectedStore) {
     row.append("td").text(Math.round(sum).toLocaleString());
   });
 
-  //Gets all the prediction info based on the selected store
-
-  //Gets all the info of the selected store and the year 2010
-  //const predictionInfo2010 = predictionInfo.filter(
-  //  (years) => years.Year == 2010
-  //);
-  //console.log(storeInfo2010);
-  //Gets only the weekly sales for the selected store and year 2010
-  //let weeklyPredictionSale2010 = predictionInfo2010.map(
-  //  (weeklyPredictionSale2010) => weeklyPredictionSale2010.Weekly_Sales
-  //);
-  //console.log(weeklySale2010);
-  //Gets the sum of all the weekly sales
-  //const predictionsum2010 = weeklyPredictionSale2010.reduce((partialSum, a) => partialSum + a, 0);
-  //console.log(Math.round(sum2010)); // 6
-
-  //Gets all the info of the selected store and the year 2011
+  //Gets all the prediction info of the selected store and the year 2011
   const predictionInfo2012 = predictionInfo.filter(
     (years) => years.Year == 2012
   );
-  //console.log(storeInfo2011);
-  //Gets only the weekly sales for the selected store and year 2011
+  //Gets only the prediction weekly sales for the selected store and year 2011
   let weeklyPredictionSale2012 = predictionInfo2012.map(
     (weeklyPredictionSale2012) => weeklyPredictionSale2012.Weekly_Sales
   );
-  //console.log(weeklySale2011);
-  //Gets the sum of all the weekly sales
-  //const predictionsum2011 = weeklySale2011.reduce((partialSum, a) => partialSum + a, 0);
-  //console.log(Math.round(sum2011)); // 6
 
   //Gets all the info of the selected store and the year 2012
   const predictionInfo2013 = predictionInfo.filter(
     (years) => years.Year == 2013
   );
-  //console.log(storeInfo2012);
-  //Gets only the weekly sales for the selected store and year 2012
+  //Gets only the prediction weekly sales for the selected store and year 2012
   let weeklyPredictionSale2013 = predictionInfo2013.map(
     (weeklyPredictionSale2013) => weeklyPredictionSale2013.Weekly_Sales
   );
-  //console.log(weeklySale2012);
-  //Gets the sum of all the weekly sales
-  //const sum2012 = weeklySale2012.reduce((partialSum, a) => partialSum + a, 0);
-  //console.log(Math.round(sum2012)); // 6
 
   const predictionSums = {
     2012: weeklyPredictionSale2012.reduce((partialSum, a) => partialSum + a, 0),
