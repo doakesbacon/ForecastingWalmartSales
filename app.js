@@ -185,6 +185,9 @@ function updatePlot(selectedStore) {
     y: predictionInfo.map((sales) => sales.Weekly_Sales),
     name: "holiday",
     type: "bar",
+    marker: {
+      color: "#FF0000",
+    },
   });
   Plotly.newPlot("predicationholiday", traces4, layout4);
 
@@ -229,6 +232,9 @@ function updatePlot(selectedStore) {
     y: predictionInfo.map((sales) => sales.Weekly_Sales),
     name: "Weekly Sales",
     type: "bar",
+    marker: {
+      color: "#FF0000",
+    },
   });
   Plotly.newPlot("predicationbymonth", traces5, layout5);
 
@@ -262,6 +268,9 @@ function updatePlot(selectedStore) {
     y: predictionInfo.map((sales) => sales.Weekly_Sales),
     name: "Weekly Sales",
     type: "bar",
+    marker: {
+      color: "#FF0000",
+    },
   });
   Plotly.newPlot("predicationgasprices", traces6, layout6);
 

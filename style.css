@@ -33,7 +33,7 @@
     color: rgb(0, 0, 0);
   }
   .panel-primary {
-    background-color: royalblue;
+    background-color: rgb(75, 106, 199);
     color: white;
     margin: 10%;
   }
@@ -56,5 +56,18 @@
     margin: auto;
     display: block;
   }
+  .panel-body{
+    max-width: 10;
+  }
+  .image-container {
+    position: relative; /* Set the container to relative positioning */
+    width: 100%; /* Set the container width */
+  }
 
-  
+.image-container img {
+    position: absolute; /* Set the image to absolute positioning */
+    top: 600; /* Align the image to the top */
+    right: 0; /* Align the image to the right */
+    width: 500px; /* Set the image width */
+    height: auto; /* Maintain aspect ratio */
+}
