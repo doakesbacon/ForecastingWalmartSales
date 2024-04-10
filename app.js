@@ -1,11 +1,3 @@
-////Get data paths
-//let all_merge_2010 = "Resources/all_merge_2010.json";
-//let all_merge_2011 = "./Resources/all_merge_2011.json";
-//let all_merge_2012 = "./Resources/all_merge_2012.json";
-////
-////let weatherType = "Rain"; // Initialize weatherType with "Rain"
-////
-
 let all_merge;
 ////// Fetch the JSON data and console log it
 d3.json("./Resources/all_merge.json").then(function (result) {
@@ -33,16 +25,43 @@ d3.json("./Resources/holiday_data.json").then(function (result) {
   //console.log(outputArray2);
 });
 
+let predictions;
+////// Fetch the JSON data and console log it
+d3.json("./Resources/predictions.json").then(function (result) {
+  predictions = result;
+  //console.log(predictions);
+  //updateDropdown(); // Call the function after data is fetched
+});
+let holidayPredictions;
+////// Fetch the JSON data and console log it
+d3.json("./Resources/holiday_predictions.json").then(function (result) {
+  holidayPredictions = result;
+  console.log(holidayPredictions);
+  //updateDropdown(); // Call the function after data is fetched
+});
+
 function updatePlot(selectedStore) {
-  console.log(selectedStore);
-  console.log(holiday_data);
+  //console.log(selectedStore);
+  //console.log(holiday_data);
   const storeInfo = holiday_data.filter(
     (stores) => stores.Store == selectedStore
   );
+  const predictionInfo = predictions.filter(
+    (stores) => stores.Store == selectedStore
+  );
+  const allStoreInfo = all_merge.filter(
+    (stores) => stores.Store == selectedStore
+  );
+  const holidayPredictionInfo = holidayPredictions.filter(
+    (stores) => stores.Store == selectedStore
+  );
+
+  //console.log(predictionInfo);
   //console.log(storeInfo);
 
+  //Chart for Revenue per holiday
   let layout = {
-    title: "Store Revenue by Holiday Week",
+    title: "Store Revenue by Holiday",
     width: 800,
     height: 500,
     margin: {
@@ -66,13 +85,9 @@ function updatePlot(selectedStore) {
     name: "holiday",
     type: "bar",
   });
-  Plotly.newPlot("plot", traces, layout);
+  Plotly.newPlot("holidaysales", traces, layout);
 
   //Chart for monthly sales
-
-  const allStoreInfo = all_merge.filter(
-    (stores) => stores.Store == selectedStore
-  );
 
   let timestamps = allStoreInfo.map((dates) => dates.Date);
 
@@ -112,7 +127,7 @@ function updatePlot(selectedStore) {
     name: "Weekly Sales",
     type: "bar",
   });
-  Plotly.newPlot("plot2", traces2, layout2);
+  Plotly.newPlot("storebymonth", traces2, layout2);
 
   //Chart for Gas prices
 
@@ -145,11 +160,124 @@ function updatePlot(selectedStore) {
     name: "Weekly Sales",
     type: "bar",
   });
-  Plotly.newPlot("plot3", traces3, layout3);
+  Plotly.newPlot("gasprices", traces3, layout3);
+
+  //Chart for Prediction Revenue per holiday
+  let layout4 = {
+    title: "Prediction Store Revenue by Holiday",
+    width: 800,
+    height: 500,
+    margin: {
+      l: 200,
+      r: 80,
+      b: 80,
+      t: 80,
+    },
+    xaxis: {
+      title: "Holidays",
+    },
+    yaxis: {
+      title: "Total Sales",
+    },
+  };
+  let traces4 = [];
+
+  traces4.push({
+    x: holidayPredictionInfo.map((holidays) => holidays.Holiday),
+    y: holidayPredictionInfo.map((sales) => sales.Weekly_Sales),
+    name: "holiday",
+    type: "bar",
+    marker: {
+      color: "#FF0000",
+    },
+  });
+  Plotly.newPlot("predicationholiday", traces4, layout4);
+
+  //Chart for Prediction monthly sales
+
+  let timeStampsPrediction = predictionInfo.map((dates) => dates.Date);
+
+  let formattedPredictionDates = timeStampsPrediction.map(
+    (timeStampsPrediction) => {
+      let date = new Date(timeStampsPrediction);
+      let year = date.getFullYear();
+      let month = date.getMonth() + 1;
+      return `${year}-${month.toString().padStart(2, "0")}`;
+    }
+  );
+
+  let layout5 = {
+    title: "Prediction Store Revenue by Month",
+    width: 800,
+    height: 500,
+    margin: {
+      l: 200,
+      r: 80,
+      b: 80,
+      t: 80,
+    },
+    xaxis: {
+      title: "Date",
+      tickvals: formattedPredictionDates,
+      ticktext: formattedPredictionDates,
+      tickangle: -45,
+    },
+    yaxis: {
+      title: "Total Sales",
+    },
+  };
+
+  let traces5 = [];
+
+  traces5.push({
+    x: formattedPredictionDates,
+    y: predictionInfo.map((sales) => sales.Weekly_Sales),
+    name: "Weekly Sales",
+    type: "bar",
+    marker: {
+      color: "#FF0000",
+    },
+  });
+  Plotly.newPlot("predicationbymonth", traces5, layout5);
+
+  //Chart for Prediction Gas prices
+
+  let layout6 = {
+    title: "Predication Store Revenue vs Gas Prices",
+    width: 800,
+    height: 500,
+    margin: {
+      l: 200,
+      r: 80,
+      b: 80,
+      t: 80,
+    },
+    xaxis: {
+      title: "Gas Price",
+      tickangle: -45,
+    },
+    yaxis: {
+      title: "Total Sales",
+    },
+  };
+
+  let traces6 = [];
+  let roundedPricesPrediction = predictionInfo.map(
+    (fuel_prices) => Math.round(parseFloat(fuel_prices.Fuel_Price) * 10) / 10
+  );
+  traces6.push({
+    x: roundedPricesPrediction,
+    y: predictionInfo.map((sales) => sales.Weekly_Sales),
+    name: "Weekly Sales",
+    type: "bar",
+    marker: {
+      color: "#FF0000",
+    },
+  });
+  Plotly.newPlot("predicationgasprices", traces6, layout6);
 
   //Gets all the info based on the selected store
 
-  //console.log(allStoreInfo);
   //Gets all the info of the selected store and the year 2010
   const storeInfo2010 = allStoreInfo.filter((years) => years.Year == 2010);
   //console.log(storeInfo2010);
@@ -197,6 +325,38 @@ function updatePlot(selectedStore) {
 
   Object.entries(sums).forEach(([year, sum]) => {
     let row = tableBody.append("tr");
+    row.append("td").text(year + ": $");
+    row.append("td").text(Math.round(sum).toLocaleString());
+  });
+
+  //Gets all the prediction info of the selected store and the year 2011
+  const predictionInfo2012 = predictionInfo.filter(
+    (years) => years.Year == 2012
+  );
+  //Gets only the prediction weekly sales for the selected store and year 2011
+  let weeklyPredictionSale2012 = predictionInfo2012.map(
+    (weeklyPredictionSale2012) => weeklyPredictionSale2012.Weekly_Sales
+  );
+
+  //Gets all the info of the selected store and the year 2012
+  const predictionInfo2013 = predictionInfo.filter(
+    (years) => years.Year == 2013
+  );
+  //Gets only the prediction weekly sales for the selected store and year 2012
+  let weeklyPredictionSale2013 = predictionInfo2013.map(
+    (weeklyPredictionSale2013) => weeklyPredictionSale2013.Weekly_Sales
+  );
+
+  const predictionSums = {
+    2012: weeklyPredictionSale2012.reduce((partialSum, a) => partialSum + a, 0),
+    2013: weeklyPredictionSale2013.reduce((partialSum, a) => partialSum + a, 0),
+  };
+
+  let tableBodyPrediction = d3.select("#sample-metadata-prediction");
+  tableBodyPrediction.html("");
+
+  Object.entries(predictionSums).forEach(([year, sum]) => {
+    let row = tableBodyPrediction.append("tr");
     row.append("td").text(year + ": $");
     row.append("td").text(Math.round(sum).toLocaleString());
   });
